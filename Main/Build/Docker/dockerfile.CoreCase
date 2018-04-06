@@ -1,0 +1,11 @@
+FROM microsoft/aspnet:4.7
+SHELL ["powershell"]
+COPY ./Binaries/ Binaries/DAL/CoreEndpoint
+COPY ./SetVariable/ Binaries/SetVariable
+COPY ./Service.config.TEMPLATE Binaries
+COPY procexp64.exe Binaries
+ENTRYPOINT C:\Binaries\SetVariable\SetVariable.ps1;\
+           &C:\Binaries\procexp64.exe -accepteula;\
+           &C:\ServiceMonitor.exe w3svc;\
+      
+EXPOSE 1001
